@@ -36,7 +36,7 @@
             ">
                 Login
             </router-link>
-            <router-link to=""
+            <router-link to="register"
             class="
             w-full
             mr-1
