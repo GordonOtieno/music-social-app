@@ -27,6 +27,7 @@
         <AboutSection />
         <SongsSection />
         <YouTubeSection />
+        <PostsSection />
        </div>
     </div>
 </template>
@@ -37,6 +38,7 @@ import AboutSection from '../../components/partials/profile/AboutSection.vue'
 import RouterLinkButton from '@/components/global/RouterLinkButton.vue';
 import SongsSection from '@/components/partials/profile/SongsSection.vue';
 import YouTubeSection from '@/components/partials/profile/YouTubeSection.vue';
+import PostsSection from '../../components/partials/profile/PostsSection.vue';
 </script>
 
 <style lang="sass" scoped>
