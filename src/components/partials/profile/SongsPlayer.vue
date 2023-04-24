@@ -38,6 +38,3 @@ const thePlayer = () =>{
 <style lang="sass" scoped>
 
 </style>
-
-// url: '/music/battle-of-the-dragons-8037.mp3',
-//url: '/music/epic-hollywood-trailer-9489.mp3',
