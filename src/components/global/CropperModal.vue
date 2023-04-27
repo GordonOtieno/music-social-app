@@ -1,13 +1,13 @@
 
 <template>
   <div class="relative z-11">
-    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"> </div>
-      <div class="fixed insert-0 z-10 overflow-y-auto mt-6">
+    <div class="fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"></div>
+      <div class="fixed inset-0 z-10 overflow-y-auto mt-6">
         <div class="flex min-h-full items-end justify-center p-4 items-center py-2">
         <div class="
         relative
         transform
-        overflow-hidden
+        
         rounded-lg
         bg-white
         text-left
@@ -17,7 +17,7 @@
         mt-10
         max-w-4xl
         ">
-      <div class="bg-white px-4 pt-5 bp-4 p-6">
+       <div class="bg-white px-4 pt-5 pb-4 p-6">
           <div class="flex items-center">
             <div class="mt-3 text-left">
               <h3 class="text-2xl font-medium leading-6 text-gray-900">
@@ -25,7 +25,6 @@
               </h3>
               <div class="flex flex-wrap my-4">
                 <label class="block
-                             upper-case
                              tracking-wide
                              text-gray-700
                              text-xs
@@ -39,7 +38,7 @@
                      form-control
                      w-full
                      px-3
-                     py-1.5
+                     py-2
                      text-base
                      font-normal
                      text-gray-700
@@ -60,20 +59,20 @@
                      id="image"
                      ref="fileInput"
                      type="file"
-                     @change="getUploadedFile"
+                     @change="getUploadedImage"
                      >
               </div>
               </div>
-              <div class="flex justify-center max-w-2xl">
+              <div class="flex justify-center max-w-2xl mb-2">
                 <Cropper
-  ref="cropper"
-  :src="uploadedImage"
-  :stencil-props="{
-    minAspectRatio: minAspectRatioProp.value.width / minAspectRatioProp.value.height,
-    maxAspectRatio: maxAspectRatioProp.value.width / maxAspectRatioProp.value.height
-  }"
-  @change="change"
-/>
+                  ref="cropper"
+                  :src="uploadedImage"
+                  :stencil-props="{
+                    minAspectRatio: minAspectRatioProp.width/minAspectRatioProp.height,
+                    maxAspectRatio: maxAspectRatioProp.width/maxAspectRatioProp.height
+                  }"
+                  @change="change"
+                />
 
               </div>
 
@@ -141,23 +140,22 @@
 </template>
 
 <script setup>
-import { ref, defineEmits, toRefs, defineProps } from 'vue';
+import { ref, defineEmits, defineProps, toRefs } from 'vue';
 import { Cropper } from 'vue-advanced-cropper'
 import 'vue-advanced-cropper/dist/style.css';
 
-const emit = defineEmits(['croppedImageData','showModal'])
+    const emit = defineEmits(['croppedImageData', 'showModal'])
 
-const props = defineProps({
+    const props = defineProps({
         minAspectRatioProp: Object,
         maxAspectRatioProp: Object
     })
+    const { minAspectRatioProp, maxAspectRatioProp } = toRefs(props)
 
-const { minAspectRatioProp, maxAspectRatioProp } = toRefs(props)
-
-let fileInput = ref(null)
-let cropper = ref(null)
-let uploadedImage = ref(null)
-let croppedImageData = {
+    let fileInput = ref(null)
+    let cropper = ref(null)
+    let uploadedImage = ref(null)
+    let croppedImageData = {
         file: null,
         imageUrl: null,
         height: null,
@@ -166,24 +164,25 @@ let croppedImageData = {
         top: null,
     }
 
-const getUploadedFile = (e) => {
-  const file = e.target.files[0];
-  uploadedImage.value = URL.createObjectURL(file);
-  console.log(uploadedImage.value);
-}
+    const getUploadedImage = (e) => {
+        const file = e.target.files[0]
+        uploadedImage.value = URL.createObjectURL(file)
+        console.log(uploadedImage.value)
+    }
 
-const crop = () => {
-  const { coordinates, canvas } = cropper.value.getResult();
-  croppedImageData.file = fileInput.value.files[0]
-  croppedImageData.imageUrl = canvas.toDataURL();
-  croppedImageData.height = coordinates.height
-  croppedImageData.height = coordinates.width
-  croppedImageData.height = coordinates.left
-  croppedImageData.height = coordinates.top
+    const crop = () => {
+        const { coordinates, canvas } = cropper.value.getResult()
 
-  emit('croppedImageData',croppedImageData)
-  emit('showModal',false)
-}
+        croppedImageData.file = fileInput.value.files[0]
+        croppedImageData.imageUrl = canvas.toDataURL()
+        croppedImageData.height = coordinates.height
+        croppedImageData.width = coordinates.width
+        croppedImageData.left = coordinates.left
+        croppedImageData.top = coordinates.top
+
+        emit('croppedImageData', croppedImageData)
+        emit('showModal', false)
+    }
 
   
 </script>
