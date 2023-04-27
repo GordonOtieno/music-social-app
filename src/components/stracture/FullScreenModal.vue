@@ -30,14 +30,22 @@
             <p class="text-2xl text-center text-white font-bold mb-2">Menu</p>
 
                 <RouterLinkButton
+                    @click="open =! open"
                     class="w-full text-gray-100 text-center text-lg"
                     btnText="Profile"
                     color="green"
                     url="/account/profile"
                 />
+                <RouterLinkButton
+                    @click="open =! open"
+                    class="w-full text-gray-100 text-center text-lg"
+                    btnText="posts"
+                    color="green"
+                    url="/account/posts"
+                />
 
                 <RouterLinkButton
-                @click="open =! open"
+                   @click="open =! open"
                     class="w-full text-gray-100 text-center text-lg mt-4"
                     btnText="close"
                     color="red"
