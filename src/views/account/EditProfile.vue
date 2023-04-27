@@ -51,7 +51,16 @@
                     @showModal="showModal = true"
                 />
              </div>
-        </div>      
+        </div>
+        
+        <div class="flex flex-wrap mt-4 mb-6">
+            <div class="w-full md:w-1/2 px-3">
+                <CroppedImage 
+                    label="Cropped Image"
+                    :image="image"
+                />
+             </div>
+        </div>    
 
         <div class="flex flex-wrap mt-4 mb-6">
             <div class="w-full px-3">
@@ -70,7 +79,7 @@
                />
             </div>
         </div>
-        <CropperModal />
+       
 
     </div>
 </template>
@@ -83,12 +92,19 @@ import DisplayCropperButton from '../../components/global/DisplayCropperButton.v
 import TextAreaView from '../../components/global/TextAreaView.vue'
 import SubmitFormBtn from '../../components/global/SubmitFormBtn.vue'
 import CropperModal from '../../components/global/CropperModal.vue'
+import CroppedImage from '../../components/global/CroppedImage.vue'
 
 let firstname = ref(null)
 let showModal = ref(false)
 let lastname = ref(null)
 let location = ref(null)
 let description = ref(null)
+// let imageData = null
+let image = ref(null)
+const setCroppedImageData = (data) => {
+    // imageData= data
+    image.value = data.imageUrl
+}
 </script>
 
 <style lang="sass" scoped>
