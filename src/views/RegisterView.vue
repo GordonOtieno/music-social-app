@@ -12,7 +12,7 @@
                     placeholder="Gordon"
                     v-model:input="firstName"
                     inputType="text"
-                    error="This is a text error"
+                    :error="errors.first_name ? errors.first_name[0] : ''"
                     />
                     <TextInput 
                     label="Last Name"
@@ -20,7 +20,7 @@
                     placeholder="Otieno"
                     v-model:input="lastName"
                     inputType="text"
-                    error="This is a text error"
+                    :error="errors.last_name ? errors.last_name[0] : ''"
                     />
                     <TextInput 
                     label="Email"
@@ -28,7 +28,7 @@
                     placeholder="john.doe@gmail.com"
                     v-model:input="email"
                     inputType="email"
-                    error="This is a text error"
+                    :error="errors.email ? errors.email[0] : ''"
                     />
                     <TextInput 
                     label="Password"
@@ -36,18 +36,16 @@
                     placeholder="pass123@!"
                     v-model:input="password"
                     inputType="password"
-                    error="This is a text error"
+                    :error="errors.password ? errors.password[0] : ''"
                     />
                     <TextInput 
                     label="Confirm Password"
                     :labelColor = false
                     placeholder="pass123@!"
-                    v-model:input="password_confirm"
+                    v-model:input="passwordConfirm"
                     inputType="password"
-                    error="This is a text error"
                     />
-                    
-                        
+                      
                 </div>
                 <button type="submit" class="
                     block
@@ -59,7 +57,9 @@
                     text-sm
                     tracking-wide
                     bg-red
-                    ">
+                    "
+                    @click="register"
+                    >
                         Register
                     </button>
                 </div>
@@ -75,13 +75,39 @@
 
 <script setup>
 import {ref} from 'vue';
+import axios from 'axios';
 import TextInput from '../components/global/TextInput.vue'
-let firstName=ref('')
-let lastName=ref('')
-let email=ref('')
-let password=ref('')
-let password_confirm=ref('')
+import { useUserStore } from '../store/user-store'
 
+const userStore = useUserStore();
+
+let errors = ref([]);
+let firstName = ref(null)
+let lastName = ref(null)
+let email = ref(null)
+let password = ref(null)
+let passwordConfirm = ref(null)
+
+const register= async() => {   
+    errors.value = [];
+    try{
+
+        let res = await axios.post('http://127.0.0.1:8000/api/v1/auth/register', {
+            first_name: firstName.value,
+            last_name: lastName.value,
+            email: email.value,
+            password:password.value,
+            password_confirmation: passwordConfirm.value
+    })
+
+    console.log(res)
+    userStore.setUserDetails(res)
+
+    }catch(err){
+        errors.value = err.response.data.errors
+    }
+    
+    }
 
 
    
