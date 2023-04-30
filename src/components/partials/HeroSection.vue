@@ -14,7 +14,7 @@
 
         <div class="mt-6"></div>
         <div class="flex justify-between">
-            <router-link to="login" 
+            <router-link to="/login" 
             class="
             w-full
             mr-1
@@ -36,7 +36,7 @@
             ">
                 Login
             </router-link>
-            <router-link to="register"
+            <router-link to="/register"
             class="
             w-full
             mr-1
