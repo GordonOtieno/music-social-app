@@ -65,7 +65,7 @@ const login = async() => {
 
     try {
 
-        let res = await axios.post('http://127.0.0.1:8000/api/v1/auth/login', {
+        let res = await axios.post('auth/login', {
             email: email.value,
             password: password.value
         })
