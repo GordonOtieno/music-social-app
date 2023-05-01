@@ -16,24 +16,30 @@ export const useUserStore = defineStore('user', {
 
   actions: {
     async setUserDetails(res) {
-        console.log('setUserDetails',res.data.user.id)
+      console.log('setUserDetails',res.data.user.id)
       this.$state.id = res.data.user.id
       this.$state.token = res.data.token
       this.$state.firstName = res.data.user.first_name
       this.$state.lastName = res.data.user.last_name
       this.$state.email = res.data.user.email
       this.$state.location = res.data.user.location
-      this.$state.image = res.data.user.image
+      // this.$state.image = res.data.user.image
       this.$state.description = res.data.user.description
     },
    
     async fetchUser(){
-        let res = await axios.get('http://127.0.0.1:8000/api/v1/users/' + this.$state.id)
+        let res = await axios.get('users/' + this.$state.id)
         this.$state.id = res.data.user.id
         this.$state.firstName = res.data.user.first_name
         this.$state.lastName = res.data.user.last_name
         this.$state.location = res.data.user.location
         this.$state.description = res.data.user.description
+        if(res.data.user.image){
+          this.$state.image = 'http://127.0.0.1:8000/images/users/' + res.data.user.image
+
+        }else{
+          this.$state.image = process.env.VUE_APP_URL + 'DefaultUserAvatar.png'
+        }
     },
 
     async clearUser(){
