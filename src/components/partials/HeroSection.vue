@@ -71,6 +71,7 @@
 </script>
 
 <style lang="scss" scoped>
+//componts stylings
 #centerCallToaction {
     width: 100%;
     position: absolute;
