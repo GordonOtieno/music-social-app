@@ -76,7 +76,7 @@
             <div class="w-full px-3">
                 <SubmitFormBtn
                     btnText="Update Profile"
-                    @click="updateUser"
+                    @submit="updateUser"
                />
             </div>
         </div>
@@ -106,7 +106,7 @@ let showModal = ref(false)
 let lastName = ref(null)
 let location = ref(null)
 let description = ref(null)
-// let imageData = null
+let imageData = null
 let image = ref(null)
 let errors = ref([])
 
@@ -119,20 +119,30 @@ onMounted(()=>{
 })
 
 const setCroppedImageData = (data) => {
-    // imageData= data
+    imageData= data
     image.value = data.imageUrl
 }
 
 const updateUser = async () =>{
     errors.value=[];
     let data = new FormData();
+
     data.append('first_name', firstName.value || '')
     data.append('last_name', lastName.value || '')
     data.append('location', location.value || '')
     data.append('description', description.value || '')
 
-    try{
+    if(imageData){
+        data.append('image', imageData.file || '')
+        data.append('height', imageData.height || '')
+        data.append('width', imageData.width || '')
+        data.append('left', imageData.left || '')
+        data.append('top', imageData.top || '')
+   
 
+    }
+
+    try{
         await axios.post('users/'+userStore.id + '?_method=PUT',data)
         await userStore.fetchUser();
         router.push('/account/profile')
