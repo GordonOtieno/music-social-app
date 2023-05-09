@@ -92,7 +92,7 @@ const register= async() => {
     errors.value = [];
     try{
 
-        let res = await axios.post('http://127.0.0.1:8000/api/v1/auth/register', {
+        let res = await axios.post('auth/register', {
             first_name: firstName.value,
             last_name: lastName.value,
             email: email.value,
