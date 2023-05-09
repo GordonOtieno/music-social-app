@@ -9,7 +9,7 @@
                     placeholder="Cool New Music"
                     v-model:input="title"
                     inputType="text"
-                    error="This is a text error"
+                    :error="errors.title ? errors.title[0] : ''"
                     />
                     <label class="block
                              tracking-wide
@@ -44,14 +44,16 @@
                      focus:outline-none
                      "
                      id="image"
-                     ref="fileInput"
+                     ref="file"
                      type="file"
-                     @change="getUploadedImage"
+                     @change="handleFileUpload"
                      >
             <div class="flex flex-wrap mt-8 mb-6">
             <div class="w-full px-3">
                 <SubmitFormBtn
                     btnText="Add Song"
+                    @submit="addSong"
+
                />
             </div>
         </div>
@@ -62,9 +64,47 @@
 </template>
 
 <script setup>
+import { ref } from 'vue';
+import axios from 'axios';
 import TextInput from '@/components/global/TextInput.vue';
 import SubmitFormBtn from '@/components/global/SubmitFormBtn.vue';
+import Swal from '../../sweetalert2.js'
+import { useUserStore } from '../../store/user-store'
 
+const userStore = useUserStore();
+
+let title = ref(null);
+let song = ref(null);
+let file = ref(null);
+let errors = ref([])
+
+const handleFileUpload = () =>{
+    song.value = file.value.files[0]
+}
+
+const addSong = async() =>{
+    if (!song.value){
+        Swal.fire(
+        'opps, Something went wrong!',
+        'You Forgot to upload mp3 file',
+        'warning'
+        )
+      return null
+
+    }
+    try{
+        let form = new FormData()
+        form.append('user_id', userStore.id)
+        form.append('title', title.value || '')
+        form.append('file', song.value)
+
+        axios.post('songs',form)
+
+    }catch(err){
+      errors.value = err.response.data.errors;
+    }
+
+}
 
 </script>
 
