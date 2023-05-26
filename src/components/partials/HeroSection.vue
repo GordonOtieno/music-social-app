@@ -64,6 +64,7 @@
      <video autoplay muted loop id="myVideo">
         <source src="../../../public/Concert.mp4" type="video/mp4">
      </video>
+    
 </template>
 
 <script>
@@ -77,6 +78,7 @@
     position: absolute;
     left: 50%;
     top: 50%;
+    z-index: 100;
     -webkit-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
 }
