@@ -1,4 +1,5 @@
 <template>
+    <TopNavigation />
     <div id="register" >
         <div class="w-full flex justify-center py-10" >
             <div class="w-full max-w-lg">
@@ -78,6 +79,7 @@ import {ref} from 'vue';
 import axios from 'axios';
 import TextInput from '../components/global/TextInput.vue'
 import { useUserStore } from '../store/user-store'
+import TopNavigation from '@/components/stracture/TopNavigation.vue';
 
 const userStore = useUserStore();
 
