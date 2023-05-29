@@ -64,7 +64,8 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref} from 'vue';
+import { useRouter } from 'vue-router';
 import axios from 'axios';
 import TextInput from '@/components/global/TextInput.vue';
 import SubmitFormBtn from '@/components/global/SubmitFormBtn.vue';
@@ -73,8 +74,11 @@ import { useUserStore } from '../../store/user-store'
 import { useSongStore } from '../../store/song-store'
 
 
+
 const userStore = useUserStore();
 const songStore = useSongStore();
+
+const router = useRouter()
 
 let title = ref(null);
 let song = ref(null);
@@ -102,7 +106,8 @@ const addSong = async() =>{
         form.append('file', song.value)
 
         axios.post('songs',form)
-        songStore.fetchSongByUserId(userStore.id)
+        await songStore.fetchSongByUserId(userStore.id)
+        router.push('/account/profile')
 
     }catch(err){
       errors.value = err.response.data.errors;
