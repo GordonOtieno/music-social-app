@@ -70,8 +70,11 @@ import TextInput from '@/components/global/TextInput.vue';
 import SubmitFormBtn from '@/components/global/SubmitFormBtn.vue';
 import Swal from '../../sweetalert2.js'
 import { useUserStore } from '../../store/user-store'
+import { useSongStore } from '../../store/song-store'
+
 
 const userStore = useUserStore();
+const songStore = useSongStore();
 
 let title = ref(null);
 let song = ref(null);
@@ -99,6 +102,7 @@ const addSong = async() =>{
         form.append('file', song.value)
 
         axios.post('songs',form)
+        songStore.fetchSongByUserId(userStore.id)
 
     }catch(err){
       errors.value = err.response.data.errors;
