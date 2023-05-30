@@ -27,12 +27,23 @@
 
             </div>
         </div>
+        {{ videoStore }}
 
     </div>
 </template>
 
 <script setup>
 import RouterLinkButton from '@/components/global/RouterLinkButton.vue';
+import { useVideoStore } from '@/store/video-store';
+import { useUserStore } from '@/store/user-store';
+import { onMounted } from 'vue';
+
+const userStore = useUserStore();
+const videoStore = useVideoStore();
+
+onMounted(()=>{
+    videoStore.fetchVideosByUserId(userStore.id)
+})
 </script>
 
 <style lang="sass" scoped>
