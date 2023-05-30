@@ -19,6 +19,8 @@ export const useSongStore = defineStore('song', {
 
     async clearSong(){
         this.$state.songs = null
+        this.$state.artistName = null
+        this.$state.artistId = null
     },
   },
   persist: true,
