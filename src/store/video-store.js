@@ -4,7 +4,7 @@ import { defineStore } from 'pinia'
 
 export const useVideoStore = defineStore('video', {
   state: () => ({
-    songs: null,
+    videos: null,
   }),
 
   actions: {
