@@ -14,7 +14,7 @@
 
                     <TextInput 
                     label="Video URL"
-                    placeholder="RhwRztNLAo8"
+                    placeholder="8vOojviWwRk"
                     v-model:input="url"
                     inputType="text"
                     :error="errors.url ? errors.url[0] : ''"
@@ -27,6 +27,7 @@
                     @submit="addYoutubeVideoLink"
                />
             </div>
+            
         </div>
               
    
@@ -53,14 +54,14 @@ let errors = ref([])
 
 const addYoutubeVideoLink = async () => {
     errors.value = [];
-
+  
     try{
         axios.post('youtube',{
             user_id: userStore.id,
             title: title.value,
             url: url.value
-        })
-        Swal.fire(
+        });
+       await  Swal.fire(
         'New Video Added',
         'You added '+ title.value + ' video Successfully',
         'success'
