@@ -21,13 +21,12 @@
 
         </div>
         <div class="flex flex-wrap pb-4">
-            <div class="my-1 px-1 w-full md:w-1/2 lg:w-1/2">
-                <div class="text-xl text-gray-500">Vieo Title</div>
-                <iframe class="w-full h-64" src="https://www.youtube.com/embed/shorts/-2BitxYJljw" frameborder="0"></iframe>
+            <div v-for="video in videoStore.videos" :key="video" class="my-1 px-1 w-full md:w-1/2 lg:w-1/2">
+                <div class="text-xl text-gray-500 mb-2">{{ video.title }}</div>
+                <iframe class="w-full h-64" :src="video.url"></iframe>
 
             </div>
         </div>
-        {{ videoStore }}
 
     </div>
 </template>
