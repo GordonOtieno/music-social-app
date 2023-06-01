@@ -9,7 +9,7 @@
                     {{++index}}  {{ video.title }}
                     <iframe class="w-full h-20" :src="video.url" frameborder="0"></iframe>
                 </div>
-                <button class="float-right
+                <div class="p-auto"><button class="float-right
                                bg-transparent
                                hover:bg-red-500
                                text-gray-900
@@ -21,7 +21,7 @@
                                border-red-500
                                hover:border-transparent
                                rounded
-                       " @click="deleteVideo(video)">Delete</button>
+                       " @click="deleteVideo(video)">Delete</button></div>
             </div>
         </div>
                
