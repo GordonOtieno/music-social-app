@@ -84,9 +84,11 @@ import SubmitFormBtn from '../../components/global/SubmitFormBtn.vue'
 import CropperModal from '../../components/global/CropperModal.vue'
 import CroppedImage from '../../components/global/CroppedImage.vue'
 import { useUserStore } from '@/store/user-store';
+import { usePostStore } from '@/store/post-store';
 import { useRouter } from 'vue-router';
 
 const userStore = useUserStore();
+const postStore = usePostStore();
 const router = useRouter()
 
 let title = ref(null)
@@ -123,6 +125,7 @@ const createPost = async () =>{
 
     try{
         await axios.post('posts/',data)
+        await postStore.fetchPostsByUserId(userStore.id)
 
         Swal.fire(
                 'Post Created!',
