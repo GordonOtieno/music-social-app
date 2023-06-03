@@ -11,7 +11,7 @@
                     color="green"
                     url="/account/add-youtube-video"
                 />
-                <RouterLinkButton
+                <RouterLinkButton v-if="userStore.id == route.params.id"
                     btnText="Delete YouTube Videos"
                     color="red"
                     url="/account/delete-youtube-video"
@@ -36,6 +36,9 @@ import RouterLinkButton from '@/components/global/RouterLinkButton.vue';
 import { useVideoStore } from '@/store/video-store';
 import { useUserStore } from '@/store/user-store';
 import { onMounted } from 'vue';
+import { useRoute } from 'vue-router';
+
+const route = useRoute();
 
 const userStore = useUserStore();
 const videoStore = useVideoStore();
