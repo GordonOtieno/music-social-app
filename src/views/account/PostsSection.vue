@@ -2,30 +2,67 @@
     <div id="PostsContainer" class="container max-w-4xl mx-auto pt-20 pb-20 px-6">
         <div class="text-gray-900 text-xl">Posts</div>
         <div class="bg-green-500 w-full h-1"></div>
-        <div class="mx-auto">
+        <div v-for="post in posts" :key="post" class="mx-auto">
             <div class="my-4">
                 <div class="flex items-center py-2">
-                    <img src="https://via.placeholder.com/50" class="rounded-full" alt="" width="50">
-                    <div class="ml-2 font-bold text-2xl">Name Here</div>
+                    <img :src="userStore.userImage(post.user.image)" class="rounded-full" alt="" width="50">
+                    <div class="ml-2 font-bold text-2xl">{{ post.user.first_name }} {{ post.user.last_name }}</div>
                 </div>
-                <img src="https://via.placeholder.com/800" alt="">
+                <img class="w-full" :src="postStore.postImage(post.image)" alt="">
                 <div class="p-4">
-                    <p class="text-3xl font-bold hover:text-gray-700 pb-4">This is a Title</p>
-                    <p class="py-2 text-lg">Event Location: Nairobi kenya</p>
+                    <p class="text-3xl font-bold hover:text-gray-700 pb-4">{{post.title}}</p>
+                    <p class="py-2 text-lg">Event Location: {{post.location}}</p>
                     <p class="pb-6">
-                        Lorem ipsum dolor sit amet consectetur adipisicing elit. 
-                        Magnam vero, ipsum obcaecati dolor officia soluta eveniet at reiciendis
-                         perspiciatis dignissimos voluptates pariatur aliquam molestias culpa 
-                        tenetur harum dolores ad? Eius.
+                        {{post.description}}
                     </p>
                 </div>
             </div>
-        </div>
-       
+        </div>     
+        <div class="flex items-center justify-center p-2">
+                <v-pagination
+                    v-model="page"
+                    :pages="pageCount"
+                    :range-size="1"
+                    active-color="#337aff"
+                    @update:modelValue="getPosts"
+                />
+            </div> 
+
         </div>
 </template>
 
 <script setup>
+import { usePostStore } from "@/store/post-store";
+import { useUserStore } from "@/store/user-store";
+import axios from "axios";
+import { onMounted, ref } from "vue";
+
+import VPagination from "@hennge/vue3-pagination";
+import "@hennge/vue3-pagination/dist/vue3-pagination.css";
+
+const postStore = usePostStore();
+const userStore = useUserStore();
+
+let page= ref(1);
+let posts= ref(null);
+let pageCount= ref(null);
+
+
+onMounted(async ()=>{
+   await getPosts();
+})
+
+const getPosts = async () => {
+   try{
+
+    let res = await axios.get('posts?page='+page.value)
+    pageCount.value=res.data.page_count;
+    posts.value = res.data.paginate.data;
+
+   }catch(err){
+    console.log(err);
+   }
+}
 
 </script>
 
