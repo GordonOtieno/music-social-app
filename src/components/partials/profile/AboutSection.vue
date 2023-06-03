@@ -4,15 +4,15 @@
             <b>About Me </b>
         </p>
         <p class="text-md text-lg text-gray-600 leading-normal">
-            {{ userStore. description }}
+            {{ profileStore. description }}
         </p>
   
     </div>
 </template>
 
 <script setup>
-import { useUserStore } from '../../../store/user-store'
-const userStore = useUserStore();
+import { useProfileStore } from '../../../store/profile-store'
+const profileStore = useProfileStore();
 
 </script>
 
