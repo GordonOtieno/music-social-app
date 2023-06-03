@@ -11,7 +11,7 @@
                     color="green"
                     url="/account/add-song"
                 />
-                <RouterLinkButton
+                <RouterLinkButton v-if="userStore.id == route.params.id"
                     btnText="Delete Song"
                     color="red"
                     url="/account/delete-song"
@@ -30,6 +30,12 @@
 <script setup>
 import RouterLinkButton from '@/components/global/RouterLinkButton.vue';
 import SongsPlayer from './SongsPlayer.vue'; 
+import { useUserStore } from '@/store/user-store';
+import { useRoute } from 'vue-router';
+
+const userStore = useUserStore();
+const route = useRoute();
+
 </script>
 
 <style lang="sass" scoped>
