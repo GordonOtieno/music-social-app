@@ -77,11 +77,21 @@
 <script setup>
 import {ref} from 'vue';
 import axios from 'axios';
+import { useRouter } from 'vue-router'
 import TextInput from '../components/global/TextInput.vue'
 import { useUserStore } from '../store/user-store'
+import { useProfileStore } from '../store/profile-store'
+import { useSongStore } from '../store/song-store'
+import { usePostStore } from '../store/post-store'
+import { useVideoStore } from '../store/video-store'
 import TopNavigation from '@/components/stracture/TopNavigation.vue';
 
-const userStore = useUserStore();
+const router = useRouter()
+const userStore = useUserStore()
+const profileStore = useProfileStore()
+const songStore = useSongStore()
+const postStore = usePostStore()
+const videoStore = useVideoStore()
 
 let errors = ref([]);
 let firstName = ref(null)
@@ -102,8 +112,15 @@ const register= async() => {
             password_confirmation: passwordConfirm.value
     })
 
-    console.log(res)
+    axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
     userStore.setUserDetails(res)
+
+    await profileStore.fetchProfileById(userStore.id)
+    await songStore.fetchSongByUserId(userStore.id)
+    await postStore.fetchPostsByUserId(userStore.id)
+    await videoStore.fetchVideosByUserId(userStore.id)
+        
+    router.push('/account/profile/' + userStore.id)
 
     }catch(err){
         errors.value = err.response.data.errors
