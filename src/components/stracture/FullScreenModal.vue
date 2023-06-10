@@ -30,6 +30,7 @@
             <p class="text-2xl text-center text-white font-bold mb-2">Menu</p>
 
                 <RouterLinkButton
+                    v-if="userStore.id"
                     @click="open =! open"
                     class="w-full text-gray-100 text-center text-lg"
                     btnText="Profile"
@@ -42,6 +43,14 @@
                     btnText="posts"
                     color="green"
                     url="/account/posts"
+                />
+                <RouterLinkButton
+                    v-if="userStore.id"
+                    @click="logout"
+                    class="w-full text-gray-100 text-center text-lg mt-2"
+                    btnText="Logout"
+                    color="green"
+
                 />
 
                 <RouterLinkButton
@@ -57,12 +66,42 @@
 </template>
 
 <script setup>
-import { useUserStore } from "@/store/user-store"
+import axios from "axios";
 import { ref } from "vue"
+import { useRouter } from "vue-router";
+import { useUserStore } from "@/store/user-store"
+import { useProfileStore } from "@/store/profile-store"
+import { useSongStore } from "@/store/song-store"
+import { usePostStore } from "@/store/post-store"
+import { useVideoStore } from "@/store/video-store"
 import RouterLinkButton from '../global/RouterLinkButton.vue'
 
 let open =ref(false)
+const router = useRouter();
 const userStore = useUserStore();
+const profileStore = useProfileStore()
+const songStore = useSongStore()
+const postStore = usePostStore()
+const videoStore = useVideoStore()
+
+const logout =  async () =>{
+    try{
+        let res = await axios.post('auth/logout',{
+            user_id: userStore.id
+        })
+        console.log(res.data)
+        userStore.clearUser();
+        profileStore.clearProfile();
+        songStore.clearSong();
+        postStore.clearPosts();
+        videoStore.clearVideo();
+
+        router.push('/')
+
+    }catch(err){
+        console.log(err);
+    }
+}
     
 </script>
 
