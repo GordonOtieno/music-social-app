@@ -16,8 +16,10 @@ const songStore = useSongStore();
 let songsList = [];
 
 onMounted(()=>{
-    mapSongs();
-    thePlayer();
+    setTimeout(()=>{
+        mapSongs();
+       thePlayer();
+    },300)
     
 })
 
