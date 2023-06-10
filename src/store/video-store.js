@@ -13,7 +13,7 @@ export const useVideoStore = defineStore('video', {
         this.$state.videos = res.data.videos_by_user
     },
 
-    async clearSong(){
+    async clearVideo(){
         this.$state.videos = null
 
     },
