@@ -107,7 +107,7 @@ const addSong = async() =>{
 
         axios.post('songs',form)
         await songStore.fetchSongByUserId(userStore.id)
-        router.push('/account/profile')
+        router.push('/account/profile/'+userStore.id)
 
     }catch(err){
       errors.value = err.response.data.errors;
