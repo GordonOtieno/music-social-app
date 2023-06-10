@@ -44,7 +44,7 @@ const userStore = useUserStore();
 const videoStore = useVideoStore();
 
 onMounted(()=>{
-    videoStore.fetchVideosByUserId(userStore.id)
+    videoStore.fetchVideosByUserId(route.params.id)
 })
 </script>
 
