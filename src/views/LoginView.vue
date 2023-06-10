@@ -82,8 +82,8 @@ const login = async() => {
             password: password.value
         })
         axios.defaults.headers.common['Authorization'] = 'Bearer ' + res.data.token
+        
         userStore.setUserDetails(res)
-
         await profileStore.fetchProfileById(userStore.id)
         await songStore.fetchSongByUserId(userStore.id)
         await postStore.fetchPostsByUserId(userStore.id)
