@@ -17,12 +17,12 @@ import { useUserStore } from '@/store/user-store'
 
 
 const routes = [
-  {
-    path: '/',
-    name: 'home',
-    component:HomeView
+    {
+      path: '/',
+      name: 'home',
+      component:HomeView
 
-  },
+    },
     {
       path: '/register',
       beforeEnter: (to, from, next)=>{
@@ -32,7 +32,7 @@ const routes = [
       component:RegisterView
   
     },
-      {
+    {
         path: '/login',
         beforeEnter: (to, from, next)=>{
           useUserStore().id ? next('/account/profile/'+  useUserStore().id) : next()
