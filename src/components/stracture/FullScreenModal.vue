@@ -44,6 +44,23 @@
                     color="green"
                     url="/account/posts"
                 />
+                
+                <RouterLinkButton
+                    v-if="!userStore.id"
+                    @click="open =! open"
+                    class="w-full text-gray-100 text-center text-lg"
+                    btnText="register"
+                    color="green"
+                    :url="'/register'"
+                />
+                <RouterLinkButton
+                  v-if="!userStore.id"
+                    @click="open =! open"
+                    class="w-full text-gray-100 text-center text-lg"
+                    btnText="Login"
+                    color="green"
+                    :url="'/login'"
+                />
                 <RouterLinkButton
                     v-if="userStore.id"
                     @click="logout"
