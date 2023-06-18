@@ -41,7 +41,7 @@
                 </div>
                 <p class="text-center text-md text-gray-900">
                     Don't have an Account yet?
-                    <router-link to="/register" class="text-blue-500 no-underline hover:underline">Login</router-link>
+                    <router-link to="/register" class="text-blue-500 no-underline hover:underline">Register</router-link>
                 </p>
             </div>
       </div>
